@@ -10,27 +10,31 @@ var humanScore = 0;
 var computerScore = 0;
 var human;
 
-document.getElementById("human-score").innerText = humanScore;
-document.getElementById("computer-score").innerText = computerScore;
+const human_score = document.querySelector("#human-score");
+const computer_score = document.querySelector("#computer-score");
+
+human_score.textContent = humanScore;
+computer_score.textContent = computerScore;
 
 function setVisualChoice(player, choice) {
     var img;
     var text;
     if (player === "Human") {
-        img = "human-img";
-        text = "human-choice";
+        img = document.querySelector("#human-img");
+        text = document.querySelector("#human-choice");
     }
     else {
-        img = "computer-img";
-        text = "computer-choice";
+        img = document.querySelector("#computer-img");
+        text = document.querySelector("#computer-choice");
     }
 
-    document.getElementById(img).src=pics[choice];
-    document.getElementById(text).innerText = choices[choice];
-
-    if (choice == 0 && Math.random() < .1) {
-        document.getElementById(img).src=pics[3];
-        document.getElementById(text).innerText = "The " + choices[choice];
+    if (choice == 0 && Math.random() < .05) {
+        img.src = pics[3];
+        text.textContent = "The " + choices[choice];
+    }
+    else {
+        img.src = pics[choice];
+        text.textContent = choices[choice];
     }
 }
 
@@ -86,21 +90,22 @@ function getVerdict(humanChoice, computerChoice) {
 
 function checkRound(humanChoice, computerChoice) {
     var verdict = getVerdict(humanChoice, computerChoice);
+    var winner = document.querySelector("#winner");
     switch(verdict) {
         case 0:
-            document.getElementById("winner").innerText = "Draw!"
+            winner.textContent = "Draw!";
             break;
         case 1:
-            document.getElementById("winner").innerText = "Computer Wins!"
+            winner.textContent = "Computer Wins!";
             computerScore++;
             break;
         case 2:
-            document.getElementById("winner").innerText = "Human Wins!"
+            winner.textContent = "Human Wins!";
             humanScore++;
             break;
     }
-    document.getElementById("human-score").innerText = humanScore;
-    document.getElementById("computer-score").innerText = computerScore;
+    human_score.textContent = humanScore;
+    computer_score.textContent = computerScore;
 }
 
 function playRound() {
