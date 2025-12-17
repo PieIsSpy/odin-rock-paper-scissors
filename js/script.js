@@ -1,73 +1,109 @@
+const pics = [
+    "https://minecraft.wiki/images/Cobblestone_JE5_BE3.png?29624",
+    "https://minecraft.wiki/images/Paper_JE2_BE2.png?9c3be",
+    "https://minecraft.wiki/images/Shears_JE2_BE2.png?163c5",
+    "https://upload.wikimedia.org/wikipedia/commons/c/c3/The_Rock_2023.jpg"
+];
+
 const choices = ["Rock", "Paper", "Scissors"];
 var humanScore = 0;
 var computerScore = 0;
+var human;
+
+document.getElementById("human-score").innerText = humanScore;
+document.getElementById("computer-score").innerText = computerScore;
+
+function setVisualChoice(player, choice) {
+    var img;
+    var text;
+    if (player === "Human") {
+        img = "human-img";
+        text = "human-choice";
+    }
+    else {
+        img = "computer-img";
+        text = "computer-choice";
+    }
+
+    document.getElementById(img).src=pics[choice];
+    document.getElementById(text).innerText = choices[choice];
+
+    if (choice == 0 && Math.random() < .1) {
+        document.getElementById(img).src=pics[3];
+        document.getElementById(text).innerText = "The " + choices[choice];
+    }
+}
 
 function getComputerChoice() {
     var num = Math.floor(Math.random() * 3);
+    setVisualChoice("Computer", num);
     return choices[num];
 }
 
-function getHumanChoice() {
-    for (let i = 0; i < 3; i++) {
-        console.log((i+1) + " - " + choices[i]);
-    }
-    var num = prompt("Choose a number");
-
-    return choices[num-1];
+function getHumanChoice(choice) {
+    setVisualChoice("Human", choice)
+    human =  choices[choice];
+    playRound();
 }
 
-function playRound(humanChoice, computerChoice) {
+function getVerdict(humanChoice, computerChoice) {
     if (humanChoice === "Rock") {
         if (computerChoice === "Paper") {
-            console.log("Computer Wins!");
-            computerScore++;
+            return 1;
         }
         else if (computerChoice === "Scissors") {
-            console.log("Human Wins!")
-            humanScore++;
+			return 2;
         }
         else {
-            console.log("Draw!")
+			return 0;
         }
     }
+
     if (humanChoice === "Paper") {
         if (computerChoice === "Scissors") {
-            console.log("Computer Wins!");
-            computerScore++;
+			return 1;
         }
         else if (computerChoice === "Rock") {
-            console.log("Human Wins!")
-            humanScore++;
+			return 2;
         }
         else {
-            console.log("Draw!")
+			return 0;
         }
     }
+
     if (humanChoice === "Scissors") {
         if (computerChoice === "Rock") {
-            console.log("Computer Wins!");
-            computerScore++;
+			return 1;
         }
         else if (computerChoice === "Paper") {
-            console.log("Human Wins!")
-            humanScore++;
+			return 2;
         }
         else {
-            console.log("Draw!")
+			return 0;
         }
     }
 }
 
-do {
-    human = getHumanChoice();
-    computer = getComputerChoice();
-
-    if (typeof human != "undefined") {
-        console.log("Human: " + human);
-        console.log("Computer: " + computer);
-        playRound(human, computer);
-
-        console.log("Human: " + humanScore);
-        console.log("Computer: " + computerScore);
+function checkRound(humanChoice, computerChoice) {
+    var verdict = getVerdict(humanChoice, computerChoice);
+    switch(verdict) {
+        case 0:
+            document.getElementById("winner").innerText = "Draw!"
+            break;
+        case 1:
+            document.getElementById("winner").innerText = "Computer Wins!"
+            computerScore++;
+            break;
+        case 2:
+            document.getElementById("winner").innerText = "Human Wins!"
+            humanScore++;
+            break;
     }
-} while (typeof human === "string");
+    document.getElementById("human-score").innerText = humanScore;
+    document.getElementById("computer-score").innerText = computerScore;
+}
+
+function playRound() {
+    computer = getComputerChoice();
+    checkRound(human, computer);
+}
