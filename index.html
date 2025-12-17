@@ -5,19 +5,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
         <link rel="stylesheet" href="css/style.css">
-        <!--
-            <script async src="script.js"></script>
-        -->
-        
+        <script defer src="js/script.js"></script>
     </head>
     <body>
         <div id="main-container">
             <div id="user-input">
                 <h2>Choose a move</h2>
                 <div id="button-container">
-                    <button type="button">Rock</button>
-                    <button type="button">Paper</button>
-                    <button type="button">Scissor</button>
+                    <button type="button" onclick="getHumanChoice(0)">Rock</button>
+                    <button type="button" onclick="getHumanChoice(1)">Paper</button>
+                    <button type="button" onclick="getHumanChoice(2)">Scissor</button>
                 </div>
             </div>
 
@@ -25,13 +22,13 @@
                 <div id="chosen-container">
                     <div class="chosen">
                         <h2>Human</h2>
-                        <img src="https://minecraft.wiki/images/Unknown_Element.png?b012c">
+                        <img id="human-img" src="https://minecraft.wiki/images/Unknown_Element.png?b012c">
                         <p id="human-choice">???</p>
                     </div>
                     
                     <div class="chosen">
                         <h2>Computer</h2>
-                        <img src="https://minecraft.wiki/images/Unknown_Element.png?b012c">
+                        <img id="computer-img" src="https://minecraft.wiki/images/Unknown_Element.png?b012c">
                         <p id="computer-choice">???</p>
                     </div>
                 </div>
